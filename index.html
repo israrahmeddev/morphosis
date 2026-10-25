@@ -85,7 +85,7 @@
 @font-face { font-family: "General Sans Placeholder"; src: local("Arial"); ascent-override: 99.89%; descent-override: 23.74%; line-gap-override: 9.89%; size-adjust: 101.11% }
     </style>
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="" />
-    <meta name="robots" content="max-image-preview:large" />
+    <meta name="robots" content="noindex" />
     <style data-framer-breakpoint-css="">
       @media(min-width: 1200px){.hidden-72rtr7{display:none!important}}@media(min-width: 810px) and (max-width: 1199.98px){.hidden-1n6tb3w{display:none!important}}@media(max-width: 809.98px){.hidden-d90vo1{display:none!important}}@media(min-width: 1200px){.hidden-1w4of7t{display:none!important}}@media(min-width: 810px) and (max-width: 1199.98px){.hidden-xkoy2d{display:none!important}}@media(max-width: 809.98px){.hidden-t2199y{display:none!important}}
     </style>
@@ -7848,6 +7848,11 @@
     if (document.title) {
       var ft = fix(document.title);
       if (ft !== document.title) document.title = ft;
+    }
+    // Framer re-sets meta robots from its page data after load; keep the page out of search results
+    var robots = document.head.querySelectorAll('meta[name="robots"]');
+    for (var r = 0; r < robots.length; r++) {
+      if (robots[r].getAttribute("content") !== "noindex") robots[r].setAttribute("content", "noindex");
     }
     var here = location.origin + location.pathname;
     var links = document.head.querySelectorAll("link[href],meta[content]");
